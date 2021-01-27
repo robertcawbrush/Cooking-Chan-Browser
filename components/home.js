@@ -29,11 +29,13 @@ export default function Home() {
 
 	return (
 		<View style={styles.container}>
-			{ appLoading ?
-				(<ActivityIndicator></ActivityIndicator>) :
-				(<Catalog boards={boards}></Catalog >)}
+			{appLoading ? (
+			<ActivityIndicator></ActivityIndicator>
+			) : (
+			<Catalog boards={boards}></Catalog>
+			)}
 		</View>
-	)
+  );
 }
 
 // manage boards
@@ -41,7 +43,9 @@ export default function Home() {
 // 
 
 const styles = StyleSheet.create({
-  container: {
+	container: {
+	  color: 'white',
+	backgroundColor: 'gray',
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",

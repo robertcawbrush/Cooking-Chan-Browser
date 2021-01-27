@@ -12,6 +12,7 @@ import FooterNav from './components/common/FooterNav';
 
 const Stack = createStackNavigator();
 
+// TODO: figure out routing for home
 export default function App() {
   return (
     <NavigationContainer
