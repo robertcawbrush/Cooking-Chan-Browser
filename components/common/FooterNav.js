@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import * as RootNavigation from "./RootNavigation";
+import * as RootNavigation from "../../RootNavigation";
 
 export default function FooterNav() {
 	return (

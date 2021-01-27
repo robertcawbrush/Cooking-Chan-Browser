@@ -8,6 +8,7 @@ import navigationRef from './RootNavigation';
 
 import Home from './components/home';
 import Header from './components/common/header';
+import FooterNav from './components/common/FooterNav';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,8 @@ export default function App() {
             header: () => <Header headerDisplay="Home" />,
           }}
         ></Stack.Screen>
-      </Stack.Navigator>
+		  </Stack.Navigator>
+		  <FooterNav></FooterNav>
     </NavigationContainer>
   );
 }
