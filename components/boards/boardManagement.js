@@ -70,6 +70,7 @@ export default function BoardManagement() {
 		}))
 	}
 
+	//TODO: Toggle favorites button?
   return (
     <View style={styles.container}>
       {appLoading ? (

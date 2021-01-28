@@ -15,7 +15,6 @@ import * as appStyles from './components/styles/body.style';
 
 const Stack = createStackNavigator();
 
-// TODO: figure out routing for home
 export default function App() {
 	return (
     <NavigationContainer ref={navigationRef} >
@@ -39,9 +38,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: appStyles.OverflowColor
-  },
-});
