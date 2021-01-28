@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     flexDirection: "column",
-	backgroundColor: appStyles.primaryColor,
-	color: 'white'
+    backgroundColor: appStyles.BaseColor,
   },
 });

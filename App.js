@@ -1,5 +1,6 @@
+import "react-native-gesture-handler";
 import React from 'react';
-
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { navigationRef } from './RootNavigation';
@@ -9,20 +10,21 @@ import Header from './components/common/header';
 import FooterNav from './components/common/FooterNav';
 import BoardManagement from "./components/boards/boardManagement";
 
-import * as routeConstants from './constants/routeConstants'
+import * as routeConstants from './constants/routeConstants';
+import * as appStyles from './components/styles/body.style';
 
 const Stack = createStackNavigator();
 
 // TODO: figure out routing for home
 export default function App() {
 	return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} >
       <Stack.Navigator initialRouteName="Home" headerMode="screen">
         <Stack.Screen
           name={routeConstants.HOME}
           component={Home}
           options={{
-            header: () => <Header headerDisplay="Home" />,
+			  header: () => <Header headerDisplay="Home" />,
           }}
         ></Stack.Screen>
         <Stack.Screen
@@ -38,3 +40,8 @@ export default function App() {
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: appStyles.OverflowColor
+  },
+});

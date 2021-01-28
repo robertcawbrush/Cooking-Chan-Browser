@@ -8,17 +8,32 @@ import * as routeConstants from '../../constants/routeConstants';
 export default function FooterNav() {
 	return (
     <View style={styles.nav}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Refresh</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Remove Seen</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => RootNavigation.navigate(routeConstants.BOARD_MANAGEMENT)}
       >
         <Text style={styles.buttonText}>Boards</Text>
+      </TouchableOpacity>
+      {RootNavigation.navigationRef?.current === routeConstants.HOME ? (
+			<TouchableOpacity
+			style={styles.button}
+			onPress={() => console.log("Refresh pressed")}
+			>
+			<Text style={styles.buttonText}>Refresh</Text>
+			</TouchableOpacity>
+		) : (
+			<TouchableOpacity
+			style={styles.button}
+			onPress={() => RootNavigation.navigate(routeConstants.HOME)}
+			>
+			<Text style={styles.buttonText}>Home</Text>
+			</TouchableOpacity>
+      )}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => console.log("Remove Seen pressed")}
+      >
+        <Text style={styles.buttonText}>Remove Seen</Text>
       </TouchableOpacity>
     </View>
   );
@@ -29,8 +44,8 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     flexDirection: "row",
-    backgroundColor: appStyles.primaryColorLight,
-    borderTopColor: "black",
+    backgroundColor: appStyles.SurfaceColor,
+    borderTopColor: appStyles.OverlayColorDark,
     borderTopWidth: 2,
     borderStyle: "solid",
   },
@@ -38,6 +53,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonText: {
-    color: appStyles.fontColor
+    color: appStyles.primaryFontColor,
   },
 });

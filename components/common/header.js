@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
     height: Platform.OS === "android" ? 54 + getStatusBarHeight() : null,
   },
   textStyle: {
-    color: appStyles.fontColor,
+    color: appStyles.primaryFontColor,
   },
 });

@@ -8,42 +8,71 @@ import {
 
 import * as appStyles from "../styles/body.style";
 import Boards from "./boards";
+import Search from "../common/search";
+
+import { debounce } from "lodash";
+// TODO: make sure that im using just debounce and not whole library
 
 export default function BoardManagement() {
 	const [favoriteBoards, setFavoriteBoards] = useState([]);
-  const [boards, setBoards] = useState([]);
-  const [appLoading, setAppLoading] = useState(true);
-  const [promiseError, setPromiseError] = useState(false);
+	const [boards, setBoards] = useState([]);
+	const [filteredBoards, setFilteredBoards] = useState([]);
+	const [appLoading, setAppLoading] = useState(true);
+	const [promiseError, setPromiseError] = useState(false);
+	const [search, setSearch] = useState("");
 
-  useEffect(() => {
-
-    getAllBoards();
+	useEffect(() => {
+	
+		if (boards.length === 0) {
+			getAllBoards();
+		}
+		
+		if (search.length > 0) {
+			
+			setFilteredBoards(boards.filter((item) => {
+				if(!item) return false
+				if (
+          item.title.toLower().includes(search) ||
+          item.board.toLower().includes(search)
+        ) {
+          return item;
+        }
+      		}))
+		}
 
     return () => {};
-  }, [favoriteBoards]);
+  }, [favoriteBoards.length, search.length]);
 
   // get boards
   const getAllBoards = () => {
     fetch("https://a.4cdn.org/boards.json")
       .then((response) => response.json())
       .then((data) => {
-        setBoards(data.boards);
+		setBoards(data.boards);
+        setFilteredBoards(data.boards);
       })
       .catch((err) => {
         setPromiseError(true);
         console.error("error retrieving boards", err);
       })
       .finally(() => {
-        setAppLoading(false);
+		  setAppLoading(false);
       });
-  };
+	};
+	
+	const onSearchChange = (text) => {
+		setSearch(text);
+	}
 
   return (
     <View style={styles.container}>
       {appLoading ? (
         <ActivityIndicator></ActivityIndicator>
       ) : (
-        <Boards boards={boards}></Boards>
+        <View style={styles.container}>
+          <Search searchValue={search} onChange={onSearchChange}></Search>
+          <Boards boards={filteredBoards}></Boards>
+        </View>
       )}
     </View>
   );
@@ -56,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     flexDirection: "column",
-	backgroundColor: appStyles.primaryColor,
-	color: 'white'
-  },
+    backgroundColor: appStyles.BaseColor,
+    color: appStyles.primaryFontColor,
+	},
 });

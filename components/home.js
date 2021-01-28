@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: appStyles.primaryColor
-	},
-	textStyle: {
-		color: appStyles.fontColor
-	}
+    backgroundColor: appStyles.BaseColor,
+  },
+  textStyle: {
+    color: appStyles.primaryFontColor,
+  },
 });
