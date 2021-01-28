@@ -10,7 +10,7 @@ export default function Board({item}) {
         <Text style={styles.textColor}>
           {"/" + item?.board + "/"} - {item?.title}{" "}
           <Text style={styles.nsfw}>{!item.ws_board ? "NSFW" : ""}</Text>
-        </Text>
+		</Text>
       </View>
     </TouchableOpacity>
   );

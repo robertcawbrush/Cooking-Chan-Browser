@@ -27,23 +27,15 @@ export default function BoardManagement() {
 			getAllBoards();
 		}
 		
-		if (search.length > 0) {
-			
-			setFilteredBoards(boards.filter((item) => {
-				if(!item) return false
-				if (
-          item.title.toLower().includes(search) ||
-          item.board.toLower().includes(search)
-        ) {
-          return item;
-        }
-      		}))
+		if (search.length === 0) {
+			if (boards.length !== filteredBoards.length) {
+				setFilteredBoards(boards);
+			}
+		} else if (search.length > 0) { 
+			searchBoards();
 		}
-
-    return () => {};
   }, [favoriteBoards.length, search.length]);
 
-  // get boards
   const getAllBoards = () => {
     fetch("https://a.4cdn.org/boards.json")
       .then((response) => response.json())
@@ -62,6 +54,20 @@ export default function BoardManagement() {
 	
 	const onSearchChange = (text) => {
 		setSearch(text);
+	}
+
+	const searchBoards = () => {
+		const term = search.toLowerCase();
+
+		setFilteredBoards(boards.filter((item) => {
+			if(!item) return false
+			if (
+				item.title.toLowerCase().includes(term) ||
+				item.board.toLowerCase().includes(term)
+				) {
+						return item;
+				}
+		}))
 	}
 
   return (

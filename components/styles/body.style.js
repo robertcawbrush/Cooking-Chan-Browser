@@ -19,7 +19,7 @@ export const SurfaceColor = "#2b2d31";
 export const BaseColor = "#242529";
 export const OverflowColor = "#050505";
 
-export const WarningColor = "#956b1d";
+export const WarningColor = "orange"; // TODO: fix orange color
 export const WarningColorDark = "#8d651c";
 
 
