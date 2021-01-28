@@ -1,18 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Catalog() {
-	//Gets all posts in one board
+export default function Post() {
+	// render single post
 
 	return (
 		<View style={styles.container}>
-			<Text>I am Catalog</Text>
+			<Text>I am a post</Text>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	{
 	container: {
 		color: 'white',
 		backgroundColor: 'gray',
@@ -21,5 +20,4 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
   },
-}
 });

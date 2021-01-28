@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Catalog() {
-	//Gets all posts in one board
+export default function Thread() {
+	//Gets all posts in one Thread
 
 	return (
 		<View style={styles.container}>
-			<Text>I am Catalog</Text>
+			<Text>I am Thread</Text>
 		</View>
 	)
 }

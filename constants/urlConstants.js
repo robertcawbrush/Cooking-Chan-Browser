@@ -1,0 +1,1 @@
+export const GET_ALL_BOARDS = "https://a.4cdn.org/boards.json";
