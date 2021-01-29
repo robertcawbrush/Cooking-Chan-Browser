@@ -11,21 +11,20 @@ import FooterNav from './components/common/FooterNav';
 import BoardManagement from "./components/boards/boardManagement";
 
 import * as routeConstants from './constants/routeConstants';
-import * as appStyles from './components/styles/body.style';
 
 const Stack = createStackNavigator();
 
 export default function App() {
 	return (
-    <NavigationContainer ref={navigationRef} >
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName="Home" headerMode="screen">
-        <Stack.Screen
-          name={routeConstants.HOME}
-          component={Home}
-          options={{
-			  header: () => <Header headerDisplay="Home" />,
-          }}
-        ></Stack.Screen>
+          <Stack.Screen
+            name={routeConstants.HOME}
+            component={Home}
+            options={{
+              header: () => <Header />,
+            }}
+          ></Stack.Screen>
         <Stack.Screen
           name={routeConstants.BOARD_MANAGEMENT}
           component={BoardManagement}

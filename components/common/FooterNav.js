@@ -14,21 +14,21 @@ export default function FooterNav() {
       >
         <Text style={styles.buttonText}>Boards</Text>
       </TouchableOpacity>
-      {RootNavigation.navigationRef?.current === routeConstants.HOME ? (
-			<TouchableOpacity
-			style={styles.button}
-			onPress={() => console.log("Refresh pressed")}
-			>
-			<Text style={styles.buttonText}>Refresh</Text>
-			</TouchableOpacity>
-		) : (
-			<TouchableOpacity
-			style={styles.button}
-			onPress={() => RootNavigation.navigate(routeConstants.HOME)}
-			>
-			<Text style={styles.buttonText}>Home</Text>
-			</TouchableOpacity>
-      )}
+			{RootNavigation.navigationRef?.current?.getCurrentRoute().name ===
+				routeConstants.HOME && (
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => console.log("Refresh pressed")}
+					>
+						<Text style={styles.buttonText}>Refresh</Text>
+					</TouchableOpacity>
+				)} 
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => RootNavigation.navigate(routeConstants.HOME)}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => console.log("Remove Seen pressed")}

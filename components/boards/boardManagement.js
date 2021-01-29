@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  Text,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import * as appStyles from "../styles/body.style";
 import Boards from "./boards";
 import Search from "../common/search";
+import * as storageConstants from '../../constants/storage.Constants';
+
 
 import { debounce } from "lodash";
 // TODO: make sure that im using just debounce and not whole library
@@ -18,15 +21,25 @@ export default function BoardManagement() {
 	const [boards, setBoards] = useState([]);
 	const [filteredBoards, setFilteredBoards] = useState([]);
 	const [appLoading, setAppLoading] = useState(true);
-	const [promiseError, setPromiseError] = useState(false);
 	const [search, setSearch] = useState("");
 
 	useEffect(() => {
 	
 		if (boards.length === 0) {
-			getAllBoards();
+			const promises = [getAllBoards(), getStoredFavoritedBoards()];
+			Promise.all(promises)
+				.catch((err) => {
+					console.error(err);
+					ToastAndroid.show(
+						"Error retrieving favorite boards",
+						ToastAndroid.SHORT
+					);
+				})
+				.finally(() => {
+					setAppLoading(false);
+				});
 		}
-		
+
 		if (search.length === 0) {
 			if (boards.length !== filteredBoards.length) {
 				setFilteredBoards(boards);
@@ -34,26 +47,52 @@ export default function BoardManagement() {
 		} else if (search.length > 0) { 
 			searchBoards();
 		}
-  }, [favoriteBoards.length, search.length]);
 
-  const getAllBoards = () => {
-    fetch("https://a.4cdn.org/boards.json")
-      .then((response) => response.json())
-      .then((data) => {
-		setBoards(data.boards);
-        setFilteredBoards(data.boards);
-      })
-      .catch((err) => {
-        setPromiseError(true);
-        console.error("error retrieving boards", err);
-      })
-      .finally(() => {
-		  setAppLoading(false);
-      });
-	};
+		return (() => {
+			AsyncStorage.setItem(
+				storageConstants.FAVORITE_BOARDS,
+				JSON.stringify(favoriteBoards)
+      )
+				.then((data) => {
+          if (data !== null) setFavoriteBoards(data);
+        })
+        .catch((err) => {
+          ToastAndroid.show(
+            "Error retrieving favorite boards from storage",
+            ToastAndroid.SHORT,
+            ToastAndroid.TOP
+          );
+        });
+		})
+  }, [favoriteBoards.size, search.length]);
+
+	const getAllBoards = () => {
+		setAppLoading(true);
+		
+		return fetch("https://a.4cdn.org/boards.json")
+		.then((response) => response.json())
+			.then(data => {
+				setBoards(data.boards);
+				setFilteredBoards(data.boards);
+		});
+	}
+
+	const getStoredFavoritedBoards = () => {
+		return AsyncStorage.getItem(storageConstants.FAVORITE_BOARDS)
+			.then((data) => {
+				if (data !== null) {
+					setFavoriteBoards(data);
+        		}
+      		}
+    );
+	}
 	
 	const onSearchChange = (text) => {
 		setSearch(text);
+	}
+
+	const clearSearch = () => {
+		setSearch("");
 	}
 
 	const searchBoards = () => {
@@ -64,10 +103,16 @@ export default function BoardManagement() {
 			if (
 				item.title.toLowerCase().includes(term) ||
 				item.board.toLowerCase().includes(term)
-				) {
-						return item;
-				}
+      		) {
+        		return item;
+      		}
 		}))
+	}
+
+	const favoriteBoard = (item) => {
+		if (!favoriteBoards.includes(item)) {
+			setFavoriteBoards(favoriteBoards.concat(item));
+		}
 	}
 
 	//TODO: Toggle favorites button?
@@ -77,8 +122,15 @@ export default function BoardManagement() {
         <ActivityIndicator></ActivityIndicator>
       ) : (
         <View style={styles.container}>
-          <Search searchValue={search} onChange={onSearchChange}></Search>
-          <Boards boards={filteredBoards}></Boards>
+          <Search
+            searchValue={search}
+            onChange={onSearchChange}
+            clearSearch={clearSearch}
+          ></Search>
+          <Boards
+            boards={filteredBoards}
+            favoriteBoard={favoriteBoard}
+          ></Boards>
         </View>
       )}
     </View>
