@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Catalog(props) {
+export default function Post() {
+	// render single post
+
 	return (
 		<View style={styles.container}>
-			<Text>{props.catalogTitle}</Text>
+			<Text>I am a post</Text>
 		</View>
 	)
 }
@@ -19,5 +21,3 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
   },
 });
-
-// TODO: ask save image to directory or default

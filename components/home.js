@@ -1,50 +1,76 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import Catalog from './catalog/catalog';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  ToastAndroid,
+} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
+import Catalogs from "./catalog/catalog";
+
+
+import * as appStyles from './styles/body.style';
+import * as storageConstants from '../constants/storage.Constants';
 
 export default function Home() {
-	const [boards, setBoards] = useState([]);
+	const [favoriteBoards, SetFavoriteBoards] = useState([]);
 	const [appLoading, setAppLoading] = useState(true);
 
 	useEffect(() => {
+		// async storage favorite boards
+		// fetch first board in array or HOME board
+		if (favoriteBoards !== null && favoriteBoards.length === 0) {
+      		retreiveFavoriteBoards();
+    	}
 
-		fetch("https://a.4cdn.org/boards.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setBoards(data.boards);
-      })
-      .catch((err) => {
-        console.error("error retrieving boards", err);
-      })
-      .finally(() => {
-        setAppLoading(false);
-      });
-
-		return (() => {
-
+    return () => {};
+	}, [favoriteBoards.length]);
+	
+	const retreiveFavoriteBoards = () => {
+		AsyncStorage.getItem(storageConstants.FAVORITE_BOARDS)
+			.then((data) => {
+				if (data !== null) {
+					SetFavoriteBoards(data);
+				} else {
+					SetFavoriteBoards(storageConstants.DEFAULT_BOARDS);
+				}
 		})
-	}, [])
-	// get catalog
-	// if favorites exist then show favorites, else show default
+		.catch((err) => {
+			console.error("Error retrieving favorite boards from storage", err);
+
+			ToastAndroid.show(
+			"Error retrieving favorite boards from storage",
+			ToastAndroid.SHORT
+			);
+		})
+		.finally(() => {
+			setAppLoading(false);
+		});
+	}
 
 	return (
-		<View style={styles.container}>
-			{ appLoading ?
-				(<ActivityIndicator></ActivityIndicator>) :
-				(<Catalog boards={boards}></Catalog >)}
-		</View>
-	)
+	<View style={styles.container}>
+		{appLoading ? (
+			<ActivityIndicator></ActivityIndicator>
+		) : (
+			<View style={styles.container}>
+			<Catalogs favoriteBoards={favoriteBoards}></Catalogs>
+			</View>
+						)}
+    </View>
+  );
 }
-
-// manage boards
-// get/list favorited boards
-// 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: appStyles.BaseColor,
+  },
+  textStyle: {
+    color: appStyles.primaryFontColor,
   },
 });

@@ -1,33 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
+import "react-native-gesture-handler";
 import React from 'react';
-import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Platform } from 'react-native';
-
-import navigationRef from './RootNavigation';
+import { navigationRef } from './RootNavigation';
 
 import Home from './components/home';
 import Header from './components/common/header';
+import FooterNav from './components/common/FooterNav';
+import BoardManagement from "./components/boards/boardManagement";
+
+import * as routeConstants from './constants/routeConstants';
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer
-      style={{
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}
-      ref={navigationRef}
-    >
+	return (
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName="Home" headerMode="screen">
+          <Stack.Screen
+            name={routeConstants.HOME}
+            component={Home}
+            options={{
+              header: () => <Header />,
+            }}
+          ></Stack.Screen>
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name={routeConstants.BOARD_MANAGEMENT}
+          component={BoardManagement}
           options={{
-            header: () => <Header headerDisplay="Home" />,
+            header: () => <Header headerDisplay="Board Management" />,
           }}
         ></Stack.Screen>
       </Stack.Navigator>
+      <FooterNav></FooterNav>
     </NavigationContainer>
   );
 }

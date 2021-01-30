@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Catalog(props) {
+export default function Thread(props) {
 	return (
 		<View style={styles.container}>
-			<Text>{props.catalogTitle}</Text>
+			<Text>I am thread</Text>
 		</View>
 	)
 }

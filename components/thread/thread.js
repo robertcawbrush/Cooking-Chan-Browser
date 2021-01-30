@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Catalog(props) {
+export default function Thread() {
+	//Gets all posts in one Thread
+
 	return (
 		<View style={styles.container}>
-			<Text>{props.catalogTitle}</Text>
+			<Text>I am Thread</Text>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
+	{
 	container: {
 		color: 'white',
 		backgroundColor: 'gray',
@@ -18,6 +21,5 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
   },
+}
 });
-
-// TODO: ask save image to directory or default
