@@ -12,10 +12,6 @@ import Boards from "./boards";
 import Search from "../common/search";
 import * as storageConstants from '../../constants/storage.Constants';
 
-
-import { debounce } from "lodash";
-// TODO: make sure that im using just debounce and not whole library
-
 export default function BoardManagement() {
 	const [favoriteBoards, setFavoriteBoards] = useState([]);
 	const [boards, setBoards] = useState([]);

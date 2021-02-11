@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Platform } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import * as appStyles from '../styles/body.style';
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import CurrentBoardContext from './commonContext';
 
 // TODO: fix the header printing in the status bar 
@@ -16,12 +16,12 @@ export default function Header(props) {
     <View style={styles.container}>
       <TouchableWithoutFeedback
         onPress={() => {
-          console.log("open hamburger");
+          console.log("open hamburger menu");
         }}
       >
-        <Text style={styles.hamburger}>
-          <MaterialCommunityIcons
-            name="forwardburger"
+        <Text style={styles.menu}>
+          <SimpleLineIcons
+            name="menu"
             size={50}
             color={appStyles.WarningColor}
           />
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 	  color: appStyles.primaryFontColor,
 	  flex: 10
   },
-  hamburger: {
+  menu: {
 	  flex: 2,
   },
 });
